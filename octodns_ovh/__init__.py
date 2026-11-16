@@ -49,20 +49,24 @@ class OvhProvider(BaseProvider):
         self,
         id,
         endpoint,
-        application_key,
-        application_secret,
-        consumer_key,
+        application_key=None,
+        application_secret=None,
+        consumer_key=None,
         *args,
+        client_id=None,
+        client_secret=None,
         **kwargs,
     ):
         self.log = logging.getLogger(f'OvhProvider[{id}]')
         self.log.debug(
             '__init__: id=%s, endpoint=%s, application_key=%s, '
-            'application_secret=***, consumer_key=%s',
+            'application_secret=***, consumer_key=%s, client_id=%s, '
+            'client_secret=***',
             id,
             endpoint,
             application_key,
             consumer_key,
+            client_id,
         )
         super().__init__(id, *args, **kwargs)
         self._client = ovh.Client(
@@ -70,6 +74,8 @@ class OvhProvider(BaseProvider):
             application_key=application_key,
             application_secret=application_secret,
             consumer_key=consumer_key,
+            client_id=client_id,
+            client_secret=client_secret,
         )
 
     def populate(self, zone, target=False, lenient=False):

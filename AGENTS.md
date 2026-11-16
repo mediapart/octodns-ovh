@@ -17,7 +17,7 @@ This repository contains the OVH provider for octoDNS. It enables planning, sync
 
 - **Provider Class**: [OvhProvider](file:///home/ross/octodns/octodns-ovh/octodns_ovh/__init__.py#L21-L460) (defined in [octodns_ovh/__init__.py](file:///home/ross/octodns/octodns-ovh/octodns_ovh/__init__.py)). This is the core provider communicating with the OVH API.
 - **Client & SDK**: Uses `ovh.Client` to interact with OVH DNS API endpoints.
-- **Authentication**: Authenticates using four configuration keys: `endpoint`, `application_key`, `application_secret`, and `consumer_key`.
+- **Authentication**: Authenticates against `endpoint` with one of two mutually exclusive methods: an application key (`application_key`, `application_secret`, and `consumer_key`) or an OAuth2 service account (`client_id` and `client_secret`). `ovh.Client` validates the combination; the provider adds no check of its own.
 - **Special Conditions**:
   - `ZONE_NOT_FOUND_MESSAGE = 'This service does not exist'`: Handles this specific `ResourceNotFoundError` return payload to cleanly flag if a zone does not exist yet.
 

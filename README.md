@@ -32,6 +32,10 @@ octodns-ovh==0.0.1
 
 ### Configuration
 
+The provider supports two authentication methods. They are mutually exclusive: configure one or the other.
+
+#### Application key
+
 ```yaml
 providers:
   ovh:
@@ -45,6 +49,26 @@ providers:
     # API consumer key
     consumer_key: env/OVH_CONSUMER_KEY
 ```
+
+#### OAuth2 service account
+
+Uses the OAuth2 client credentials of an [OVHcloud IAM service account](https://docs.ovhcloud.com/en/guides/manage-and-operate/api/manage-service-account), whose rights are granted through IAM policies. Available on the `ovh-eu`, `ovh-ca` and `ovh-us` endpoints.
+
+```yaml
+providers:
+  ovh:
+    class: octodns_ovh.OvhProvider
+    # OVH api v6 endpoint
+    endpoint: ovh-eu
+    # OAuth2 client id of the service account
+    client_id: env/OVH_CLIENT_ID
+    # OAuth2 client secret of the service account
+    client_secret: env/OVH_CLIENT_SECRET
+```
+
+#### Values left out
+
+A value left out of the provider configuration falls back to [python-ovh's own lookup](https://github.com/ovh/python-ovh#configuration): the `OVH_APPLICATION_KEY`, `OVH_APPLICATION_SECRET`, `OVH_CONSUMER_KEY`, `OVH_CLIENT_ID` and `OVH_CLIENT_SECRET` environment variables, then its `ovh.conf` files. Values of the other method found there count as configured: an OAuth2 configuration fails with `Can't use both application_key/application_secret and OAuth2 client_id/client_secret` while `OVH_APPLICATION_KEY` is still exported.
 
 ### Support Information
 

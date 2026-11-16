@@ -487,6 +487,41 @@ class TestOvhProvider(TestCase):
     ]
 
     @patch('ovh.Client')
+    def test_init_application_key(self, client_mock):
+        OvhProvider(
+            'test',
+            'endpoint',
+            'application_key',
+            'application_secret',
+            'consumer_key',
+        )
+        client_mock.assert_called_once_with(
+            endpoint='endpoint',
+            application_key='application_key',
+            application_secret='application_secret',
+            consumer_key='consumer_key',
+            client_id=None,
+            client_secret=None,
+        )
+
+    @patch('ovh.Client')
+    def test_init_oauth2(self, client_mock):
+        OvhProvider(
+            'test',
+            'endpoint',
+            client_id='client_id',
+            client_secret='client_secret',
+        )
+        client_mock.assert_called_once_with(
+            endpoint='endpoint',
+            application_key=None,
+            application_secret=None,
+            consumer_key=None,
+            client_id='client_id',
+            client_secret='client_secret',
+        )
+
+    @patch('ovh.Client')
     def test_populate(self, client_mock):
         provider = OvhProvider(
             'test',
