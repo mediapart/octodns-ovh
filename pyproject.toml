@@ -28,7 +28,7 @@ classifiers = [
 ]
 dependencies = [
     "octodns>=1.8.0",
-    "ovh>=0.5.0",
+    "ovh>=1.2.0",
 ]
 
 [project.urls]
